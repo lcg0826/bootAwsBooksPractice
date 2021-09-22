@@ -1,7 +1,5 @@
-package com.bootAwsBooks.prac.domian.posts;
+package com.bootAwsBooks.prac.domain.posts;
 
-import com.bootAwsBooks.prac.domain.posts.Posts;
-import com.bootAwsBooks.prac.domain.posts.PostsRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
