@@ -2,12 +2,16 @@ package com.bootAwsBooks.prac.service.posts;
 
 import com.bootAwsBooks.prac.domain.posts.Posts;
 import com.bootAwsBooks.prac.domain.posts.PostsRepository;
+import com.bootAwsBooks.prac.web.dto.PostsListResponseDto;
 import com.bootAwsBooks.prac.web.dto.PostsResponseDto;
 import com.bootAwsBooks.prac.web.dto.PostsSaveRequestDto;
 import com.bootAwsBooks.prac.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -39,5 +43,15 @@ public class PostsService {
     public PostsResponseDto findById(Long id) {
         Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다 .... id = " + id ));
         return new PostsResponseDto(entity);
+    }
+
+    /*
+    @Transactional 뒤에 (readOnly = true)를 추가하면 트랜잭션 범위는 유지하되, 조회 기능만 남겨두오 조회속도 개선되어 등록,수정, 삭제 기능이 전혀 없는 메소드에서 사용하는것이 이득
+     */
+    @Transactional
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
