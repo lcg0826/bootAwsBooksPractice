@@ -1,5 +1,6 @@
 package com.bootAwsBooks.prac.web;
 
+import com.bootAwsBooks.prac.config.auth.LoginUser;
 import com.bootAwsBooks.prac.config.auth.dto.SessionUser;
 import com.bootAwsBooks.prac.service.posts.PostsService;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +23,16 @@ public class indexController {
     postsService.findAllDesc() 로 가져온 결과는 posts로 index.mustache에 전달
      */
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) {
 
         model.addAttribute("posts", postsService.findAllDesc());
 
         /*
         CustomOAuth2UserService에서 로그인 성공 시 세션에 SessionUser를 저장하도록 구성
         로그인 성공시 httpSession.getAttribute("user")에서 값을 가져올 수 있도록
+        @LoginUser 어노테이션 추가 후 주석처리함
          */
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        // SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
         /*
         세션에 저장된 값이 있을 때만 model에 userName 저장
